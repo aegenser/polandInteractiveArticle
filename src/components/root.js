@@ -1,13 +1,18 @@
 import React from 'react';
 import {csv} from 'd3-fetch';
-import ExampleChart from './example-chart';
+import PolandTransformSmall from './poland-chart-gmina';
+import PolandTransformMedium from './poland-chart-powiat';
+import PolandTransformBig from './poland-chart-woj';
+import PolandIncomeSupport from './poland-chart-is-compare';
+import PolandTopBottom from './poland-chart-size-compare';
 
 const longBlock = `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The basic question at hand is what is the relationship between right-wing\n
+politics and wealth in Poland? I chose to explore this because in 2015,\n
+the party Prawo i Sprawiedliwość (PiS), or Law and Justice in English, took\n
+power in Poland for the first time since the party’s inception in 2001. It won,\n
+ in part, with its support from the working class. My project intends to\n
+ highlight this relationship with a set of visualizations. \n
 `;
 
 class RootComponent extends React.Component {
@@ -20,7 +25,7 @@ class RootComponent extends React.Component {
   }
 
   componentWillMount() {
-    csv('data/sample-data.csv')
+    csv('data/data_project.csv')
       .then(data => {
         this.setState({
           data,
@@ -36,12 +41,13 @@ class RootComponent extends React.Component {
     }
     return (
       <div className="relative">
-        <h1> Hello Explainable!</h1>
-        <div>{`The example data was loaded! There are ${data.length} rows`}</div>
-        <ExampleChart data={data}/>
-        <div>{longBlock}</div>
-        <ExampleChart data={data}/>
-        <div>{longBlock}</div>
+        <h1> PiS and the Poor</h1>
+        <div className='max-width-600'>{longBlock}</div>
+        <PolandIncomeSupport />
+        <PolandTransformSmall />
+        <PolandTransformBig />
+        <PolandTransformMedium />
+        <PolandTopBottom />
       </div>
     );
   }
